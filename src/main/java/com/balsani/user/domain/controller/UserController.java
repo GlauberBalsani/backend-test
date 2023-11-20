@@ -2,15 +2,11 @@ package com.balsani.user.domain.controller;
 
 import java.util.List;
 
+
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.balsani.user.domain.model.User;
 import com.balsani.user.domain.model.UserDTO;
@@ -18,6 +14,7 @@ import com.balsani.user.domain.model.UserRequestDTO;
 import com.balsani.user.domain.services.UserService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/users")
@@ -38,17 +35,42 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAll() {
-        List<User> body = userService.findAll();
+    public ResponseEntity<List<UserDTO>> getAll() {
+        List<UserDTO> body = userService.findAll();
 
         return ResponseEntity.ok(body);
     }
 
-    @GetMapping("{nome}")
+    @GetMapping("/byname/{nome}")
     public ResponseEntity<List<UserDTO>> getByName(@Valid @RequestBody @PathVariable String nome) {
         List<UserDTO> findByName = userService.findByName(nome);
         
         return ResponseEntity.status(HttpStatus.FOUND).body(findByName);
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<UserDTO> getById(@PathVariable @Valid Long id) {
+        UserDTO bodyId = userService.findById(id);
+        return  ResponseEntity.status(HttpStatus.OK).body(bodyId);
+
+    }
+
+    @DeleteMapping("deleteBy/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable @Valid Long id) {
+        userService.deletById(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/byId/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable @Positive Long id, @RequestBody @Valid UserRequestDTO request) {
+        UserDTO userDTO = userService.update(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+
+    }
+
+
+
+    
     
 }

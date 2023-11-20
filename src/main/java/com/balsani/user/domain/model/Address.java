@@ -32,7 +32,7 @@ public class Address {
     @Column(name = "cidade")
     private String cidade;
 
-    @OneToOne
+    @OneToOne(mappedBy = "address")
     private User user;
 
     @Enumerated(EnumType.STRING)

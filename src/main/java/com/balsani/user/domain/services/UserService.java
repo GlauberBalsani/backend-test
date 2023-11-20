@@ -4,6 +4,7 @@ package com.balsani.user.domain.services;
 
 import java.util.List;
 
+import com.balsani.user.domain.exceptions.RecordNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.balsani.user.domain.exceptions.BusinessException;
@@ -13,7 +14,10 @@ import com.balsani.user.domain.model.UserRequestDTO;
 import com.balsani.user.domain.model.mapper.UserMapper;
 import com.balsani.user.domain.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -30,8 +34,18 @@ public class UserService {
         return mapper.toDTO(userRepository.save(user));
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public void deletById(Long id) {
+        userRepository.delete(userRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id)));
+    }
+
+    public UserDTO findById(Long id){
+        return userRepository.findById(id).map(mapper::toDTO)
+                .orElseThrow(() -> new BusinessException("USer nao enotrado"));
+    }
+
+    public List<UserDTO> findAll() {
+        return userRepository.findAll().stream().map(mapper::toDTO).toList();
     }
 
     public List<UserDTO> findByName(String nome) {
@@ -41,17 +55,22 @@ public class UserService {
     }
 
     public UserDTO update(Long id, UserRequestDTO request) {
-        return userRepository.findById(id).map(actual -> {
+        User actual = userRepository.findById(id).orElse(null);
+
+        if (actual != null) {
             actual.setNome(request.nome());
             actual.setSobrenome(request.sobreNome());
             actual.setEmail(request.email());
 
-            return mapper.toDTO(userRepository.save(actual));
-        })
-
-        .orElseThrow(() -> new BusinessException("Atualização invalida"));
+            User updatedUser = userRepository.save(actual);
+            return mapper.toDTO(updatedUser);
+        } else {
+            throw new BusinessException("Atualização inválida");
+        }
     }
 
-    
-    
+
+
+
+
 }
