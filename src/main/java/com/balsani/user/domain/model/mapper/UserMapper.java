@@ -7,7 +7,9 @@ import com.balsani.user.domain.model.UserDTO;
 import com.balsani.user.domain.model.UserRequestDTO;
 
 /**
- * Os records ainda não dão suporte a dependecia de mapeamento
+ * @author Glauber 
+ * classe de mapeamento de entidade para dto e vice e versa 
+ * 
  */
 
 @Component

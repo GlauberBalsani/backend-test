@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.balsani.user.domain.exceptions.BusinessException;
 import com.balsani.user.domain.model.User;
 import com.balsani.user.domain.model.UserDTO;
 import com.balsani.user.domain.model.UserRequestDTO;
@@ -37,6 +38,18 @@ public class UserService {
         return userRepository.findByNome(nome).stream()
             .map(mapper::toDTO)
             .toList();
+    }
+
+    public UserDTO update(Long id, UserRequestDTO request) {
+        return userRepository.findById(id).map(actual -> {
+            actual.setNome(request.nome());
+            actual.setSobrenome(request.sobreNome());
+            actual.setEmail(request.email());
+
+            return mapper.toDTO(userRepository.save(actual));
+        })
+
+        .orElseThrow(() -> new BusinessException("Atualização invalida"));
     }
 
     
