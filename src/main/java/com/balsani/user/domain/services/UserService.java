@@ -33,6 +33,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<UserDTO> findByName(String nome) {
+        return userRepository.findByNome(nome).stream()
+            .map(mapper::toDTO)
+            .toList();
+    }
+
     
     
 }
