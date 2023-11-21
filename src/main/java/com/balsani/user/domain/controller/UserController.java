@@ -8,9 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.balsani.user.domain.model.User;
-import com.balsani.user.domain.model.UserDTO;
-import com.balsani.user.domain.model.UserRequestDTO;
+import com.balsani.user.domain.model.dto.UserDTO;
+import com.balsani.user.domain.model.dto.UserRequestDTO;
 import com.balsani.user.domain.services.UserService;
 
 import jakarta.validation.Valid;

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.balsani.user.domain.exceptions.BusinessException;
 import com.balsani.user.domain.model.User;
-import com.balsani.user.domain.model.UserDTO;
-import com.balsani.user.domain.model.UserRequestDTO;
+import com.balsani.user.domain.model.dto.UserDTO;
+import com.balsani.user.domain.model.dto.UserRequestDTO;
 import com.balsani.user.domain.model.mapper.UserMapper;
 import com.balsani.user.domain.repository.UserRepository;
 

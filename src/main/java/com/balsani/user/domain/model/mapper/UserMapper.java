@@ -3,8 +3,8 @@ package com.balsani.user.domain.model.mapper;
 import org.springframework.stereotype.Component;
 
 import com.balsani.user.domain.model.User;
-import com.balsani.user.domain.model.UserDTO;
-import com.balsani.user.domain.model.UserRequestDTO;
+import com.balsani.user.domain.model.dto.UserDTO;
+import com.balsani.user.domain.model.dto.UserRequestDTO;
 
 /**
  * @author Glauber 

@@ -1,4 +1,4 @@
-package com.balsani.user.domain.model;
+package com.balsani.user.domain.model.dto;
 
 import com.balsani.user.domain.model.enums.UF;
 import jakarta.validation.constraints.NotBlank;

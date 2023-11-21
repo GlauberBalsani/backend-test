@@ -1,4 +1,4 @@
-package com.balsani.user.domain.model;
+package com.balsani.user.domain.model.dto;
 
 import org.hibernate.validator.constraints.Length;
 
